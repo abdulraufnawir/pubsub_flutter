@@ -11,7 +11,7 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 
 
 class Body extends StatelessWidget {
-  static const String title = 'AC Control Dashboard';
+  static const String title = '';
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -34,8 +34,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // const MainScreen({Key? key}) : super(key: key);
-  //final _scaffoldState = GlobalKey<ScaffoldState>();
   bool _val1= false;
   bool _val2=false;
   bool _val3=false;
@@ -108,9 +106,6 @@ class _MainPageState extends State<MainPage> {
 
   late StreamSubscription subscription;
 
-
-
-
   Future<int> mqttConnect(String uniqueID) async{ //
 
     ByteData rootCA = await rootBundle.load('assets/certs/RootCA.pem');
@@ -121,11 +116,11 @@ class _MainPageState extends State<MainPage> {
     context.setClientAuthoritiesBytes(rootCA.buffer.asUint8List());
     context.useCertificateChainBytes(deviceCert.buffer.asUint8List());
     context.usePrivateKeyBytes(privateKey.buffer.asUint8List());
-    client.securityContext = context; //same position (inside future)
-    client.logging(on: true);         //same position (inside future)
-    client.keepAlivePeriod = 20;      //same position (inside future)
-    client.port = 443;               //same position (inside future)
-    client.secure = true;             //same position (inside future)
+    client.securityContext = context;
+    client.logging(on: true);
+    client.keepAlivePeriod = 20;
+    client.port = 8883;
+    client.secure = true;
 
     client.pongCallback = pong;
     final MqttConnectMessage connMess =
@@ -151,12 +146,11 @@ class _MainPageState extends State<MainPage> {
 
 
 
-//client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) ...
-  void _onMessage1(List<mqtt.MqttReceivedMessage> event){ //event = c
+  void _onMessage1(List<mqtt.MqttReceivedMessage> event){
     print(event.length);
-    final mqtt.MqttPublishMessage recMess =  // Recmess
+    final mqtt.MqttPublishMessage recMess =
     event[0].payload as mqtt.MqttPublishMessage;
-    final String message=  // message = pt
+    final String message=
     mqtt.MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
     print(
         '[MQTT client] MQTT message : topic is <${event[0].topic}>,'
@@ -178,7 +172,7 @@ class _MainPageState extends State<MainPage> {
 
 
 
-  Widget _switches(){ //-lights
+  Widget _switches(){
     return SafeArea(
       child:
       Container (

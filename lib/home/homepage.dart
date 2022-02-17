@@ -17,17 +17,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int selectedPage = 0;
-  final _pageOptions= [homeScreen(),Switches()]; //[Home(), Statistics(), ACs(), Settings()];
+  final _pageOptions= [homeScreen(),Switches()];
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('flutter bottom bar'),
-      // ),
+
         body: _pageOptions[selectedPage],
-        bottomNavigationBar: ConvexAppBar(backgroundColor:Colors.green,//kPrimaryColor,
+        bottomNavigationBar: ConvexAppBar(backgroundColor:Colors.lightBlue,
           items: [
             TabItem(icon: Icons.home, title: 'home'),
             //TabItem(icon: Icons.timeline, title: 'Statistics'),
